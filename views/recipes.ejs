@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<body>
+  <h1>Recipes</h1>
+  <link rel="stylesheet" href="/styles.css">
+    
+  <!-- <pre><%= JSON.stringify(comments, null, 2) %></pre>
+  <%= comments %> -->
+        
+
+  <form action="/recipes" method="POST">
+    <input name="name" placeholder="Name" required />
+    <input name="ingredients" placeholder="Ingredients" required />
+    <input name="instructions" placeholder="Instructions" required />
+    <input name="cuisine" placeholder="Cuisine" />
+    <input name="prep_time" type="number" min="0" placeholder="Prep Time" />
+    <input name="dietary" placeholder="Dietary Type" />
+    <button>Add Recipe</button>
+  </form>
+
+    <ul>
+        <% recipes.forEach(r => { %>
+            <li>
+            <details>
+                <summary>
+                <strong><%= r.name %></strong>
+                (<%= r.cuisine %>) — <%= r.dietary %>
+                </summary>
+
+                <p><strong>Ingredients:</strong> <%= r.ingredients %></p>
+                <p><strong>Instructions:</strong> <%= r.instructions %></p>
+                <p><strong>Prep Time:</strong> <%= r.prep_time %> mins</p>
+                
+                <form action="/recipes/<%= r.id %>/comment" method="post">
+                  <input name="comment" placeholder="Comment...." required />
+                  <button type="submit">ADD comment</button>
+                </form>
+                <!-- EDIT BUTTON -->
+                <a href="/recipes/<%= r.id %>/edit"><button>Edit</button></a>
+
+                <!-- DELETE BUTTON -->
+                <form 
+                action="/recipes/<%= r.id %>/delete" 
+                method="POST" 
+                style="display:inline;"
+                >
+                <button type="submit">Delete</button>
+                </form>
+                <details>
+                <summary><small>Comments</small></summary>
+                <div style="width: 300px;
+                    height: 200px;
+                    border: 1px solid #ccc;
+                    overflow: auto;">
+                    <% if (comments.length === 0) { %>
+                      <p>No comments yet.</p>
+                    <% } else { %>
+                      <% comments.forEach(c => { %>
+                        <div class="comment">
+                          <strong><%= c.comment %></strong>
+<form action="/comments/<%= c.id %>/delete" method="POST" style="display:inline;">
+      <button type="submit" onclick="return confirm('Delete this comment?')">
+  Delete
+</button>
+
+                        </div>
+                      <% }) %>
+                    <% } %>
+                    
+                    
+                    <!-- <% if (comments.length === 0) { %>
+                      <p>No comments yet.</p>
+                    <% } else { %>
+                      <% comments.forEach(c => { %>
+                        <div class="comment">
+                          <strong><%= c.user_name %></strong>
+                          <p><%= c.content %></p>
+                          <small><%= c.created_at %></small>
+                        </div>
+                      <% }) %>
+                    <% } %>    -->
+                </div>
+                </details>
+            </details>
+            </li>
+        <% }) %>
+     </ul>
+
+
+</body>
+</html>

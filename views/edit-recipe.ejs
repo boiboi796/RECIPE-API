@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<body>
+  <h1>Edit Recipe</h1>
+  <link rel="stylesheet" href="/styles.css">
+
+  <form action="/recipes/<%= recipe.id %>/edit" method="POST">
+    <input name="name" value="<%= recipe.name %>" required />
+
+    <input name="ingredients" value="<%= recipe.ingredients %>" required />
+
+    <textarea name="instructions" required>
+<%= recipe.instructions %>
+    </textarea>
+
+    <input name="cuisine" value="<%= recipe.cuisine %>" />
+
+    <input name="prep_time" type="number" value="<%= recipe.prep_time %>" />
+
+    <input name="dietary" value="<%= recipe.dietary %>" />
+
+    <button>Update Recipe</button>
+  </form>
+
+  <a href="/"><button type="button">Back</button></a>
+</body>
+</html>
